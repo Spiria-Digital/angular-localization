@@ -75,6 +75,7 @@ which was later updated to include performance improvements [seen here](http://c
 
 ```shell
 $ npm install -d
+$ bower install
 $ npm test
 ```
 

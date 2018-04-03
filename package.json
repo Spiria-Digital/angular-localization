@@ -7,7 +7,6 @@
     "dist/angular-localization-spiria.css"
   ],
   "scripts": {
-    "postinstall": "bower install",
     "test": "gulp test"
   },
   "repository": {
