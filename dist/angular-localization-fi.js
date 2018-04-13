@@ -1,8 +1,8 @@
 /*!
- * angular-localization-spiria :: v1.6.0 :: 2017-05-10
+ * angular-localization-fi :: v1.6.0 :: 2018-04-13
  * web: http://doshprompt.github.io/angular-localization
  *
- * Copyright (c) 2017 | Rahul Doshi
+ * Copyright (c) 2018 | Rahul Doshi
  * License: MIT
  */
 ;(function (angular, window, document, undefined) {
@@ -554,4 +554,4 @@ angular.module('ngLocalize.Config', [])
         allowNestedJson: false
     });
 
-}(this.angular, this, this.document));
+}(window.angular, window, window.document));
