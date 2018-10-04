@@ -1,10 +1,11 @@
 {
   "name": "angular-localization-fi",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "modded version of angularjs localization done right.",
   "main": "dist/angular-localization-fi.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "gulp": "gulp"
   },
   "repository": {
     "type": "git",
