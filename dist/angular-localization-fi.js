@@ -1,15 +1,15 @@
 /*!
- * angular-localization-spiria :: v1.6.0 :: 2017-05-10
+ * angular-localization-fi :: v1.6.1 :: 2018-10-04
  * web: http://doshprompt.github.io/angular-localization
  *
- * Copyright (c) 2017 | Rahul Doshi
+ * Copyright (c) 2018 | Rahul Doshi
  * License: MIT
  */
 ;(function (angular, window, document, undefined) {
     'use strict';
 
 angular.module('ngLocalize.Version', [])
-    .constant('localeVer', '1.6.0');
+    .constant('localeVer', '1.6.1');
 angular.module('ngLocalize', ['ngSanitize', 'ngLocalize.Config', 'ngLocalize.Events', 'ngLocalize.InstalledLanguages']);
 
 angular.module('ngLocalize.InstalledLanguages', [])
@@ -26,11 +26,11 @@ angular.module('ngLocalize')
             currentLocale,
             deferrences,
             bundles,
-            cookieStore,
+            cookies,
             sym = localeConf.allowNestedJson ? '/' : '.';
 
-        if (localeConf.persistSelection && $injector.has('$cookieStore')) {
-            cookieStore = $injector.get('$cookieStore');
+        if (localeConf.persistSelection && $injector.has('$cookies')) {
+            cookies = $injector.get('$cookies');
         }
 
         function splitToken(tok){
@@ -357,8 +357,11 @@ angular.module('ngLocalize')
 
                 $rootScope.$broadcast(localeEvents.localeChanges, currentLocale);
 
-                if (cookieStore) {
-                    cookieStore.put(localeConf.cookieName, lang);
+                if (cookies) {
+                    cookies.put(localeConf.cookieName, lang);
+                }else if(localeConf.persistSelection){
+                    // cookies service isnt availible and they want to persist, fallback to local storage
+                    localStorage.setItem(localeConf.cookieName, lang);
                 }
             }
         }
@@ -394,9 +397,10 @@ angular.module('ngLocalize')
         }
 
         function initialSetLocale() {
-            setLocale(cookieStore && cookieStore.get(localeConf.cookieName) ?
-                cookieStore.get(localeConf.cookieName) :
-                getPreferredBrowserLanguage());
+            var initial = getPreferredBrowserLanguage();
+            var cookie = cookies && cookies.get(localeConf.cookieName);
+            var local = localeConf.persistSelection && localStorage.getItem(localeConf.cookieName);
+            setLocale(cookie || local || initial);
         }
 
         initialSetLocale();
@@ -554,4 +558,4 @@ angular.module('ngLocalize.Config', [])
         allowNestedJson: false
     });
 
-}(this.angular, this, this.document));
+}(window.angular, window, window.document));
